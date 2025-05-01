@@ -1,0 +1,45 @@
+<div>
+    <h2>Resume Builder</h2>
+
+    <label>Name:</label>
+    <input type="text" [(ngModel)]="resumeData.name">
+
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="resumeData.email">
+
+    <label>Phone:</label>
+    <input type="text" [(ngModel)]="resumeData.phone">
+
+    <label>Summary:</label>
+    <textarea [(ngModel)]="resumeData.summary"></textarea>
+
+    <label>Skills:</label>
+    <input type="text" #skillInput>
+    <button (click)="addSkill(skillInput.value)">Add Skill</button>
+
+    <label>Experience:</label>
+    <input type="text" #companyInput placeholder="Company">
+    <input type="text" #roleInput placeholder="Role">
+    <input type="text" #durationInput placeholder="Duration">
+    <button
+        (click)="addExperience({ company: companyInput.value, role: roleInput.value, duration: durationInput.value })">
+        Add Experience
+    </button>
+
+    <div id="resumePreview">
+        <h2>{{ resumeData.name }}</h2>
+        <p>Email: {{ resumeData.email }}</p>
+        <p>Phone: {{ resumeData.phone }}</p>
+        <p><strong>Summary:</strong> {{ resumeData.summary }}</p>
+        <h3>Skills</h3>
+        <ul>
+            <li *ngFor="let skill of resumeData.skills">{{ skill }}</li>
+        </ul>
+        <h3>Experience</h3>
+        <ul>
+            <li *ngFor="let exp of resumeData.experience">{{ exp.company }} - {{ exp.role }} ({{ exp.duration }})</li>
+        </ul>
+    </div>
+
+    <button (click)="generatePDF()">Download PDF</button>
+</div>
