@@ -1,32 +1,82 @@
-<div>
-    <h2>Resume Builder</h2>
+<div id="resumeForm">
+    <form [formGroup]="resumeForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="personalDetails">
+            <label for="name">Name:</label>
+            <input type="text" formControlName="name" placeholder="Enter your name">
+            <label for="email">Email:</label>
+            <input type="email" formControlName="email" placeholder="Enter your email">
+            <label for="phone">Phone:</label>
+            <input type="text" formControlName="phone" placeholder="Enter your phone number [10 digits only]">
+            <label for="linkedInProfile">LinkedIn Profile:</label>
+            <input type="text" formControlName="linkedInProfile" placeholder="Enter your Linked In Profile URL">
+            <label for="gitHubProfile">GitHub Profile:</label>
+            <input type="text" formControlName="gitHubProfile" placeholder="Enter your Git Hub Profile URL">
+        </div>
 
-    <label>Name:</label>
-    <input type="text" [(ngModel)]="resumeData.name">
+        <div formGroupName="professionalSummary">
+            <label for="summary">Professional Summary:</label>
+            <textarea formControlName="summary" placeholder="Describe your professional summary"></textarea>
+        </div>
 
-    <label>Email:</label>
-    <input type="email" [(ngModel)]="resumeData.email">
+        <div formArrayName="skills">
+            <label for="skills">Skills:</label>
+            <input type="text" #skillInput placeholder="Add your skill(s)">
+            <button type="button" (click)="addSkill(skillInput.value)">Add Skill(s)</button>
 
-    <label>Phone:</label>
-    <input type="text" [(ngModel)]="resumeData.phone">
+            <ul>
+                <li *ngFor="let skill of skills.controls; let i = index">
+                    {{ skill.value }}
+                </li>
+            </ul>
+        </div>
 
-    <label>Summary:</label>
-    <textarea [(ngModel)]="resumeData.summary"></textarea>
+        <div>
+            <input type="text" #companyInput placeholder="Company">
+            <input type="text" #roleInput placeholder="Role">
+            <input type="text" #durationInput placeholder="Duration">
+            <button type="button"
+                (click)="addExperience({ company: companyInput.value, role: roleInput.value, duration: durationInput.value })">
+                Add Experience(s)
+            </button>
+        </div>
 
-    <label>Skills:</label>
-    <input type="text" #skillInput>
-    <button (click)="addSkill(skillInput.value)">Add Skill</button>
+        <div formArrayName="experienceDetails">
+            <div *ngFor="let exp of experienceDetails.controls; let i = index" [formGroup]="getExperienceGroup(i)">
+                <p>Company: <input type="text" formControlName="company"></p>
+                <p>Role: <input type="text" formControlName="role"></p>
+                <p>Duration: <input type="text" formControlName="duration"></p>
+            </div>
+        </div>
 
-    <label>Experience:</label>
-    <input type="text" #companyInput placeholder="Company">
-    <input type="text" #roleInput placeholder="Role">
-    <input type="text" #durationInput placeholder="Duration">
-    <button
-        (click)="addExperience({ company: companyInput.value, role: roleInput.value, duration: durationInput.value })">
-        Add Experience
-    </button>
+        <div>
+            <input type="text" #qualificationInput placeholder="Company">
+            <input type="text" #gradeInput placeholder="Role">
+            <input type="text" #monthYearOfPassingInput placeholder="Duration">
+            <input type="text" #institutionNameInput placeholder="Duration">
+            <input type="text" #placeOfStudyInput placeholder="Duration">
+            <button type="button"
+                (click)="addEducationalQualifications({ qualification: qualificationInput.value, grade: gradeInput.value, monthYearOfPassing: monthYearOfPassingInput.value, institutionName: institutionNameInput.value, placeOfStudy: placeOfStudyInput.value })">
+                Add Educational Qualification(s)
+            </button>
+        </div>
 
-    <div id="resumePreview">
+        <div formArrayName="educationalQualifications">
+            <div *ngFor="let qualifications of educationalQualifications.controls; let i = index"
+                [formGroup]="getEducationalQualificationGroup(i)">
+                <p>Qualification: <input type="text" formControlName="qualification"></p>
+                <p>Grade: <input type="text" formControlName="grade"></p>
+                <p>Month & Year Of Passing: <input type="text" formControlName="monthYearOfPassing"></p>
+                <p>Name Of the Institution: <input type="text" formControlName="institutionName"></p>
+                <p>Place Of Study: <input type="text" formControlName="placeOfStudy"></p>
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="resumeForm.invalid">Generate Resume</button>
+    </form>
+</div>
+
+
+<!-- <div id="resumePreview">
         <h2>{{ resumeData.name }}</h2>
         <p>Email: {{ resumeData.email }}</p>
         <p>Phone: {{ resumeData.phone }}</p>
@@ -41,5 +91,4 @@
         </ul>
     </div>
 
-    <button (click)="generatePDF()">Download PDF</button>
-</div>
+    <button (click)="generatePDF()">Download PDF</button> -->
