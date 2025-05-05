@@ -4,6 +4,9 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { CommonModule } from '@angular/common';
 import { ResumeData } from '../resume-data';
+import { ButtonModule } from 'primeng/button';
+import { StepperModule } from 'primeng/stepper';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 @Component({
@@ -11,29 +14,41 @@ import { ResumeData } from '../resume-data';
   selector: 'app-resume-builder',
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    InputTextModule,
+    StepperModule,
+    ButtonModule
+
   ],
   templateUrl: './resume-builder.component.html',
   styleUrl: './resume-builder.component.css'
 })
 export class ResumeBuilderComponent {
 
-  resumeForm: FormGroup;
+  personalDetailsForm: FormGroup;
+  professionalSummaryForm: FormGroup;
+  skillsForm: FormGroup;
+  experienceDetailsForm: FormGroup;
+  educationalQualificationsForm: FormGroup;
+
   resumeData: ResumeData = new ResumeData;
+  activeStep: number = 1;
 
   constructor(private fb: FormBuilder) {
-    this.resumeForm = this.fb.group({
-      personalDetails: this.fb.group({
-        name: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        phone: ['', Validators.required],
-        linkedInProfile: ['', Validators.required],
-        gitHubProfile: ['', Validators.required]
-      }),
-      professionalSummary: this.fb.group({
-        summary: ['', Validators.required],
-      }),
+    this.personalDetailsForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      linkedInProfile: ['', Validators.required],
+      gitHubProfile: ['', Validators.required]
+    });
+    this.professionalSummaryForm = this.fb.group({
+      summary: ['', Validators.required],
+    });
+    this.skillsForm = this.fb.group({
       skills: this.fb.array([]),
+    });
+    this.experienceDetailsForm = this.fb.group({
       experienceDetails: this.fb.array([
         new FormGroup({
           company: new FormControl(''),
@@ -41,6 +56,8 @@ export class ResumeBuilderComponent {
           duration: new FormControl('')
         })
       ]),
+    });
+    this.educationalQualificationsForm = this.fb.group({
       educationalQualifications: this.fb.array([
         new FormGroup({
           qualification: new FormControl(''),
@@ -57,20 +74,14 @@ export class ResumeBuilderComponent {
   }
 
   onSubmit() {
-    if (this.resumeForm.valid) {
+    if (this.personalDetailsForm.valid) {
       // Handle form submission (e.g., save data, generate resume)
-      console.log(this.resumeForm.value);
-      this.resumeData.name = this.resumeForm.value.name;
-      this.resumeData.email = this.resumeForm.value.email;
-      this.resumeData.phone = this.resumeForm.value.phone;
-      this.resumeData.summary = this.resumeForm.value.summary;
-      this.resumeData.email = this.resumeForm.value.email;
-
+      console.log(this.personalDetailsForm.value);
     }
   }
 
   get skills(): FormArray {
-    return this.resumeForm.get('skills') as FormArray;
+    return this.skillsForm.get('skills') as FormArray;
   }
 
   addSkill(skill: string) {
@@ -81,7 +92,7 @@ export class ResumeBuilderComponent {
 
 
   get experienceDetails(): FormArray {
-    return this.resumeForm.get('experienceDetails') as FormArray;
+    return this.experienceDetailsForm.get('experienceDetails') as FormArray;
   }
 
   getExperienceGroup(index: number): FormGroup {
@@ -101,7 +112,7 @@ export class ResumeBuilderComponent {
 
 
   get educationalQualifications(): FormArray {
-    return this.resumeForm.get('educationalQualifications') as FormArray;
+    return this.educationalQualificationsForm.get('educationalQualifications') as FormArray;
   }
 
   getEducationalQualificationGroup(index: number): FormGroup {

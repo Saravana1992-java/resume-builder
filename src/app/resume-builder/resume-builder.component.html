@@ -1,4 +1,178 @@
-<div id="resumeForm">
+<div class="card flex justify-center">
+    <p-stepper [(value)]="activeStep" class="basis-[40rem]">
+        <p-step-list>
+            <p-step [value]="1" class="flex flex-row flex-auto gap-2">
+                <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                    <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                        <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center" [ngClass]="{
+                                'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                'border-surface': value > activeStep
+                            }">
+                            <i class="pi pi-user"></i>
+                        </span>
+                    </button>
+                </ng-template>
+            </p-step>
+
+            <p-step [value]="2" class="flex flex-row flex-auto gap-2">
+                <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                    <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                        <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center" [ngClass]="{
+                                'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                'border-surface': value > activeStep
+                            }">
+                            <i class="pi pi-star"></i>
+                        </span>
+                    </button>
+                </ng-template>
+            </p-step>
+
+            <p-step [value]="3" class="flex flex-row flex-auto gap-2">
+                <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                    <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                        <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center" [ngClass]="{
+                                'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                'border-surface': value > activeStep
+                            }">
+                            <i class="pi pi-id-card"></i>
+                        </span>
+                    </button>
+                </ng-template>
+            </p-step>
+        </p-step-list>
+
+        <p-step-panels>
+            <p-step-panel [value]="1">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 20rem">
+                        <div class="text-center mt-4 mb-4 text-xl font-semibold">Enter your personal details</div>
+                        <form [formGroup]="personalDetailsForm" (ngSubmit)="onSubmit()">
+
+                            <div class="field">
+                                <input type="text" formControlName="name" placeholder="Name" fluid>
+                            </div>
+                            <div class="field">
+                                <input type="email" formControlName="email" type="email" placeholder="Email" fluid>
+                            </div>
+                            <div class="field">
+                                <input type="text" formControlName="phone" placeholder="Phone number [10 digits only]"
+                                    fluid>
+                            </div>
+
+                            <div class="field">
+                                <input type="text" formControlName="linkedInProfile" placeholder="Linked In Profile"
+                                    fluid>
+                            </div>
+                            <div class="field">
+                                <input type="text" formControlName="gitHubProfile" placeholder="Git Hub Profile" fluid>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="flex pt-6 justify-end">
+                        <p-button (onClick)="activateCallback(2)" label="Next" icon="pi pi-arrow-right"
+                            iconPos="right" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="2">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <form [formGroup]="professionalSummaryForm" (ngSubmit)="onSubmit()">
+                                <textarea formControlName="summary"
+                                    placeholder="Describe your professional summary"></textarea>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-between">
+                        <p-button (onClick)="activateCallback(1)" label="Back" severity="secondary"
+                            icon="pi pi-arrow-left" />
+                        <p-button (onClick)="activateCallback(3)" label="Next" icon="pi pi-arrow-right"
+                            iconPos="right" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="3">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
+                                <input type="text" #skillInput placeholder="Add your skill(s)">
+                                <button type="button" (click)="addSkill(skillInput.value)">Add Skill(s)</button>
+
+                                <ul>
+                                    <li *ngFor="let skill of skills.controls; let i = index">
+                                        {{ skill.value }}
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-between">
+                        <p-button (onClick)="activateCallback(2)" label="Back" severity="secondary"
+                            icon="pi pi-arrow-left" />
+                        <p-button (onClick)="activateCallback(4)" label="Next" icon="pi pi-arrow-right"
+                            iconPos="right" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="4">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <form [formGroup]="experienceDetailsForm" (ngSubmit)="onSubmit()">
+                                <div>
+                                    <input type="text" #companyInput placeholder="Company">
+                                    <input type="text" #roleInput placeholder="Role">
+                                    <input type="text" #durationInput placeholder="Duration">
+                                    <button type="button"
+                                        (click)="addExperience({ company: companyInput.value, role: roleInput.value, duration: durationInput.value })">
+                                        Add Experience(s)
+                                    </button>
+                                </div>
+
+                                <div formArrayName="experienceDetails">
+                                    <div *ngFor="let exp of experienceDetails.controls; let i = index"
+                                        [formGroup]="getExperienceGroup(i)">
+                                        <p>Company: <input type="text" formControlName="company"></p>
+                                        <p>Role: <input type="text" formControlName="role"></p>
+                                        <p>Duration: <input type="text" formControlName="duration"></p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-between">
+                        <p-button (onClick)="activateCallback(3)" label="Back" severity="secondary"
+                            icon="pi pi-arrow-left" />
+                        <p-button (onClick)="activateCallback(5)" label="Next" icon="pi pi-arrow-right"
+                            iconPos="right" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="5">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                        <div class="text-center mt-4 mb-4 text-xl font-semibold">Account created successfully</div>
+                        <div class="text-center">
+                            <img alt="logo" src="https://primefaces.org/cdn/primeng/images/stepper/content.svg" />
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-start">
+                        <p-button (onClick)="activateCallback(4)" label="Back" severity="secondary"
+                            icon="pi pi-arrow-left" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+        </p-step-panels>
+    </p-stepper>
+</div>
+<!-- <div id="resumeForm">
     <form [formGroup]="resumeForm" (ngSubmit)="onSubmit()">
         <div formGroupName="personalDetails">
             <label for="name">Name:</label>
@@ -73,7 +247,7 @@
 
         <button type="submit" [disabled]="resumeForm.invalid">Generate Resume</button>
     </form>
-</div>
+</div> -->
 
 
 <!-- <div id="resumePreview">
