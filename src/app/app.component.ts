@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { appConfig } from './app.config';
-import { ResumeBuilderComponent } from './resume-builder/resume-builder.component';
+import { ResumeBuilderComponent } from './resume-builder/components/resume-builder.component';
 
 @Component({
   standalone: true,

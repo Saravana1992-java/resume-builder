@@ -1,0 +1,495 @@
+<p-card [style]="{ width: '98vw', overflow: 'visible'}">
+    <div class="card flex justify-center">
+        <p-stepper [(value)]="activeStep" class="basis-[40rem]">
+            <p-step-list>
+                <p-step [value]="1" class="flex flex-row flex-auto gap-2">
+                    <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                        <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                [ngClass]="{
+                                    'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                    'border-surface': value > activeStep
+                                }">
+                                <i class="pi pi-user"></i>
+                            </span>
+                        </button>
+                    </ng-template>
+                </p-step>
+
+                <p-step [value]="2" class="flex flex-row flex-auto gap-2">
+                    <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                        <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                [ngClass]="{
+                                    'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                    'border-surface': value > activeStep
+                                }">
+                                <i class="pi pi-upload"></i>
+                            </span>
+                        </button>
+                    </ng-template>
+                </p-step>
+
+                <p-step [value]="3" class="flex flex-row flex-auto gap-2">
+                    <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                        <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                [ngClass]="{
+                                    'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                    'border-surface': value > activeStep
+                                }">
+                                <i class="pi pi-sparkles"></i>
+                            </span>
+                        </button>
+                    </ng-template>
+                </p-step>
+
+                <p-step [value]="4" class="flex flex-row flex-auto gap-2">
+                    <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                        <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                [ngClass]="{
+                                    'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                    'border-surface': value > activeStep
+                                }">
+                                <i class="pi pi-history"></i>
+                            </span>
+                        </button>
+                    </ng-template>
+                </p-step>
+
+                <p-step [value]="5" class="flex flex-row flex-auto gap-2">
+                    <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                        <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                [ngClass]="{
+                                    'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                    'border-surface': value > activeStep
+                                }">
+                                <i class="pi pi-book"></i>
+                            </span>
+                        </button>
+                    </ng-template>
+                </p-step>
+
+                <p-step [value]="6" class="flex flex-row flex-auto gap-2">
+                    <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                        <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                [ngClass]="{
+                                    'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                    'border-surface': value > activeStep
+                                }">
+                                <i class="pi pi-sparkles"></i>
+                            </span>
+                        </button>
+                    </ng-template>
+                </p-step>
+            </p-step-list>
+
+            <p-step-panels
+                style="display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 3.5;">
+                <p-step-panel [value]="1">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div
+                            style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                            <h3>Enter your personal details</h3>
+                            <form [formGroup]="profileForm">
+                                <div class="field">
+                                    <p-floatlabel variant="on">
+                                        <input pInputText id="name" formControlName="name" />
+                                        <label for="name">Name</label>
+                                    </p-floatlabel>
+                                </div>
+                                <div class="field">
+                                    <p-floatlabel variant="on">
+                                        <input pInputText id="currentJobTitle" formControlName="currentJobTitle" />
+                                        <label for="currentJobTitle">Current Job Title</label>
+                                    </p-floatlabel>
+                                </div>
+                                <div class="field">
+                                    <p-floatlabel variant="on">
+                                        <input pInputText id="specilalizedSkillTitle"
+                                            formControlName="specilalizedSkillTitle" />
+                                        <label for="specilalizedSkillTitle">Specialized Job Title</label>
+                                    </p-floatlabel>
+                                </div>
+                                <p-floatlabel variant="on">
+                                    <p-datepicker inputId="dateOfBirth" class="max-w-full" formControlName="dateOfBirth"
+                                        appendTo="body" dateFormat="dd.mm.yy" [showTime]="false"></p-datepicker>
+                                    <label for="dateOfBirth">Date Of Birth</label>
+                                </p-floatlabel>
+
+                                <div class="field">
+                                    <p-floatlabel variant="on">
+                                        <input pInputText id="email" formControlName="email" />
+                                        <label for="email">Email</label>
+                                    </p-floatlabel>
+                                </div>
+                                <div class="field">
+                                    <p-floatlabel variant="on">
+                                        <input pInputText id="phone" formControlName="phone" pKeyFilter="int" />
+                                        <label for="phone">Phone</label>
+                                    </p-floatlabel>
+                                </div>
+                                <div class="field">
+                                    <p-floatlabel variant="on">
+                                        <input pInputText id="address" formControlName="address" />
+                                        <label for="address">Address</label>
+                                    </p-floatlabel>
+                                </div>
+                                <div class="field">
+                                    <p-floatlabel variant="on">
+                                        <input pInputText id="linkedInProfile" formControlName="linkedInProfile" />
+                                        <label for="linkedInProfile">Linked In Profile</label>
+                                    </p-floatlabel>
+                                </div>
+                                <div class="field">
+                                    <p-floatlabel variant="on">
+                                        <input pInputText id="gitHubProfile" formControlName="gitHubProfile" />
+                                        <label for="gitHubProfile">Git Hub Profile</label>
+                                    </p-floatlabel>
+                                </div>
+
+                                <div
+                                    style="margin-top: 40px; display: flex; gap: 20px; align-items: center; justify-content: center;">
+                                    <p-button (onClick)="onSubmit(activateCallback(2))" label="Next"
+                                        icon="pi pi-arrow-right" iconPos="right" [disabled]="profileForm.invalid" />
+                                </div>
+                            </form>
+                        </div>
+
+                    </ng-template>
+                </p-step-panel>
+
+                <p-step-panel [value]="2">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                            <div class="flex flex-wrap justify-center gap-4">
+                                <h3>Upload your official photo</h3>
+                                <form [formGroup]="profilePictureForm">
+                                    <div class="card flex flex-col gap-6 items-center justify-center">
+                                        <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload"
+                                            uploadLabel="Upload" uploadIcon="pi pi-check" cancelLabel="Cancel"
+                                            cancelIcon="pi pi-times" accept="image/*" maxFileSize="1000000"
+                                            accept="image/*" maxFileSize="1000000" (onUpload)="onUpload($event)" />
+                                    </div>
+
+                                    <div class="flex pt-6 justify-end">
+                                        <p-button (onClick)="activateCallback(1)" label="Back" severity="secondary"
+                                            icon="pi pi-arrow-left" />
+                                        <p-button (onClick)="onSubmit(activateCallback(3))" label="Next"
+                                            icon="pi pi-arrow-right" iconPos="right" [disabled]="profileForm.invalid" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+                <p-step-panel [value]="3">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div
+                            style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                            <h3>Add your professional highlights</h3>
+                            <form [formGroup]="profileHighlightsForm">
+                                <div style="display: flex; gap: 20px;">
+                                    <div style="display: flow; gap: 10px;">
+                                        <div class="field" style="display: flex; gap: 10px;">
+                                            <div style="display: flow; gap: 10px;">
+                                                <p-floatlabel variant="on">
+                                                    <input pInputText #skillName />
+                                                    <label for="skillName">Skill</label>
+                                                </p-floatlabel>
+                                                <p-rating #skillRating id="skillRating"></p-rating>
+                                            </div>
+                                            <div style="display: flex; align-items: flex-end; justify-content: center;">
+                                                <p-button
+                                                    (onClick)="addSkill({ skillName: skillName.value, skillRating: skillRating.value })"
+                                                    label="Add Skill(s)" severity="secondary"></p-button>
+                                            </div>
+                                        </div>
+                                        <div formArrayName="skills">
+                                            <div *ngFor="let skill of skills.controls; let i = index"
+                                                [formGroup]="getSkillGroup(i)">
+                                                <p-tag
+                                                    [style]="{ border: '2px solid var(--border-color)', color: 'var(--text-color)'}"
+                                                    rounded="true">
+                                                    <div class="flex items-center gap-2 px-1">
+                                                        <span class="text-base">
+                                                            {{ skill.get('skillName')?.value}}
+                                                            <p-rating formControlName="skillRating"
+                                                                [readonly]="true"></p-rating>
+                                                        </span>
+                                                    </div>
+                                                </p-tag>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flow; gap: 10px;">
+                                        <div class="field" style="display: flex; gap: 10px;">
+                                            <div style="display: flow; gap: 10px;">
+                                                <p-floatlabel variant="on">
+                                                    <input pInputText #awardTitle />
+                                                    <label for="awardTitle">Award</label>
+                                                </p-floatlabel>
+                                                <p-floatlabel variant="on">
+                                                    <p-datepicker inputId="awardedDate" #awardedDate class="max-w-full"
+                                                        appendTo="body" dateFormat="dd.mm.yy"
+                                                        [showTime]="false"></p-datepicker>
+                                                    <label for="awardedDate">Received On</label>
+                                                </p-floatlabel>
+                                            </div>
+                                            <div style="display: flex; align-items: flex-end; justify-content: center;">
+                                                <p-button
+                                                    (onClick)="addAwards({ awardTitle: awardTitle.value, awardedDate: awardedDate.value })"
+                                                    label="Add Award(s)" severity="secondary"></p-button>
+                                            </div>
+                                        </div>
+                                        <div formArrayName="awards">
+                                            <div *ngFor="let award of awards.controls; let i = index"
+                                                [formGroup]="getAwardsGroup(i)">
+                                                <p-tag
+                                                    [style]="{ border: '2px solid var(--border-color)', color: 'var(--text-color)'}"
+                                                    rounded="true">
+                                                    <div class="flex items-center gap-2 px-1">
+                                                        <span class="text-base">
+                                                            {{ award.get('awardTitle')?.value}}
+                                                            on {{ award.get('awardedDate')?.value | date: 'dd.MM.yyyy'}}
+                                                        </span>
+                                                    </div>
+                                                </p-tag>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flow; gap: 10px;">
+                                        <div class="field" style="display: flex; gap: 10px;">
+                                            <div style="display: flow; gap: 10px;">
+                                                <p-floatlabel variant="on">
+                                                    <input pInputText #certificate />
+                                                    <label for="certificate">certification</label>
+                                                </p-floatlabel>
+                                                <p-floatlabel variant="on">
+                                                    <p-datepicker inputId="certificateExpiryDate" #certificateExpiryDate
+                                                        appendTo="body" class="max-w-full" dateFormat="dd.mm.yy"
+                                                        [showTime]="false"></p-datepicker>
+                                                    <label for="certificateExpiryDate">Certificate Expiry Date</label>
+                                                </p-floatlabel>
+                                            </div>
+                                            <div style="display: flex; align-items: flex-end; justify-content: center;">
+                                                <p-button
+                                                    (onClick)="addCertifications({ certificate: certificate.value, certificateExpiryDate: certificateExpiryDate.value })"
+                                                    label="Add Certifications(s)" severity="secondary"></p-button>
+                                            </div>
+                                        </div>
+                                        <div formArrayName="certifications">
+                                            <div *ngFor="let certification of certifications.controls; let i = index"
+                                                [formGroup]="getCertificationsGroup(i)">
+                                                <p-tag
+                                                    [style]="{ border: '2px solid var(--border-color)', color: 'var(--text-color)'}"
+                                                    rounded="true">
+                                                    <div class="flex items-center gap-2 px-1">
+                                                        <span class="text-base">
+                                                            {{ certification.get('certificate')?.value}}
+                                                            expire on {{
+                                                            certification.get('certificateExpiryDate')?.value | date:
+                                                            'dd.MM.yyyy'}}
+                                                        </span>
+                                                    </div>
+                                                </p-tag>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    style="margin-top: 40px; display: flex; gap: 20px; align-items: center; justify-content: center;">
+                                    <p-button (onClick)="activateCallback(2)" label="Back" severity="secondary"
+                                        icon="pi pi-arrow-left" iconPos="left" />
+                                    <p-button (onClick)="onSubmit(activateCallback(4))" label="Next"
+                                        icon="pi pi-arrow-right" iconPos="right"
+                                        [disabled]="profileHighlightsForm.invalid" />
+                                </div>
+                            </form>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+
+                <p-step-panel [value]="4">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div
+                            style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                            <h3>Add your professional experience</h3>
+                            <form [formGroup]="experienceDetailsForm">
+                                <div style="display: flow; gap: 10px;">
+                                    <div class="field" style="display: flex; gap: 10px;">
+                                        <div style="display: flow; gap: 10px;">
+                                            <p-floatlabel variant="on">
+                                                <input pInputText #company />
+                                                <label for="company">Company Name</label>
+                                            </p-floatlabel>
+                                            <p-floatlabel variant="on">
+                                                <input pInputText #role />
+                                                <label for="role">Role</label>
+                                            </p-floatlabel>
+                                            <p-floatlabel variant="on">
+                                                <p-datepicker inputId="fromDate" #fromDate appendTo="body"
+                                                    class="max-w-full" dateFormat="dd.mm.yy"
+                                                    [showTime]="false"></p-datepicker>
+                                                <label for="fromDate">Date Of Joining</label>
+                                            </p-floatlabel>
+                                            <p-floatlabel variant="on">
+                                                <p-datepicker inputId="toDate" #toDate appendTo="body"
+                                                    class="max-w-full" dateFormat="dd.mm.yy"
+                                                    [showTime]="false"></p-datepicker>
+                                                <label for="toDate">Last Working Day</label>
+                                            </p-floatlabel>
+                                        </div>
+                                        <div style="display: flex; align-items: flex-end; justify-content: center;">
+                                            <p-button
+                                                (onClick)="addExperience({ company: company.value, role: role.value, fromDate: fromDate.value, toDate: toDate.value })"
+                                                label="Add Work Experience(s)" severity="secondary"></p-button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p-timeline [value]="experiences">
+                                            <ng-template #opposite let-experience>
+                                                <small class="text-surface-500 dark:text-surface-400">
+                                                    {{ experience.fromDate | date: 'dd.MM.yyyy' }} -
+                                                    {{ experience.toDate | date: 'dd.MM.yyyy' }}
+                                                </small>
+                                            </ng-template>
+                                            <ng-template #content let-experience>
+                                                <strong>{{ experience.company }}</strong> -
+                                                {{ experience.role }}
+                                            </ng-template>
+                                        </p-timeline>
+                                    </div>
+                                </div>
+                                <div
+                                    style="margin-top: 40px; display: flex; gap: 20px; align-items: center; justify-content: center;">
+                                    <p-button (onClick)="activateCallback(2)" label="Back" severity="secondary"
+                                        icon="pi pi-arrow-left" iconPos="left" />
+                                    <p-button (onClick)="onSubmit(activateCallback(4))" label="Next"
+                                        icon="pi pi-arrow-right" iconPos="right"
+                                        [disabled]="profileHighlightsForm.invalid" />
+                                </div>
+                            </form>
+                        </div>
+                        <!-- <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                            <div class="flex flex-wrap justify-center gap-4">
+                                <form [formGroup]="experienceDetailsForm">
+                                    <div>
+                                        <input type="text" #companyInput placeholder="Company">
+                                        <input type="text" #roleInput placeholder="Role">
+                                        <input type="text" #durationInput placeholder="Duration">
+                                        <button type="button"
+                                            (click)="addExperience({ company: companyInput.value, role: roleInput.value, duration: durationInput.value })">
+                                            Add Experience(s)
+                                        </button>
+                                    </div>
+
+                                    <div formArrayName="experienceDetails">
+                                        <div *ngFor="let exp of experienceDetails.controls; let i = index"
+                                            [formGroup]="getExperienceGroup(i)">
+                                            <p>Company: <input type="text" formControlName="company"></p>
+                                            <p>Role: <input type="text" formControlName="role"></p>
+                                            <p>Duration: <input type="text" formControlName="duration"></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex pt-6 justify-between">
+                                        <p-button (onClick)="activateCallback(3)" label="Back" severity="secondary"
+                                            icon="pi pi-arrow-left" />
+                                        <p-button (onClick)="onSubmit(activateCallback(5))" label="Next"
+                                            icon="pi pi-arrow-right" iconPos="right"
+                                            [disabled]="experienceDetails.invalid" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div> -->
+                    </ng-template>
+                </p-step-panel>
+
+                <p-step-panel [value]="5">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                            <h3>Account created successfully</h3>
+                            <form [formGroup]="educationalQualificationsForm">
+                                <div>
+                                    <input type="text" #qualificationInput placeholder="Company">
+                                    <input type="text" #gradeInput placeholder="Role">
+                                    <input type="text" #monthYearOfPassingInput placeholder="Duration">
+                                    <input type="text" #institutionNameInput placeholder="Duration">
+                                    <input type="text" #placeOfStudyInput placeholder="Duration">
+                                    <button type="button"
+                                        (click)="addEducationalQualifications({ qualification: qualificationInput.value, grade: gradeInput.value, monthYearOfPassing: monthYearOfPassingInput.value, institutionName: institutionNameInput.value, placeOfStudy: placeOfStudyInput.value })">
+                                        Add Educational Qualification(s)
+                                    </button>
+                                </div>
+
+                                <div formArrayName="educationalQualifications">
+                                    <div *ngFor="let qualifications of educationalQualifications.controls; let i = index"
+                                        [formGroup]="getEducationalQualificationGroup(i)">
+                                        <p>Qualification: <input type="text" formControlName="qualification"></p>
+                                        <p>Grade: <input type="text" formControlName="grade"></p>
+                                        <p>Month & Year Of Passing: <input type="text"
+                                                formControlName="monthYearOfPassing">
+                                        </p>
+                                        <p>Name Of the Institution: <input type="text"
+                                                formControlName="institutionName">
+                                        </p>
+                                        <p>Place Of Study: <input type="text" formControlName="placeOfStudy"></p>
+                                    </div>
+                                </div>
+                                <div class="flex pt-6 justify-between">
+                                    <p-button (onClick)="activateCallback(4)" label="Back" severity="secondary"
+                                        icon="pi pi-arrow-left" />
+                                    <p-button (onClick)="onSubmit(activateCallback(6))" label="Next"
+                                        icon="pi pi-arrow-right" iconPos="right"
+                                        [disabled]="educationalQualifications.invalid" />
+                                </div>
+                            </form>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+
+                <p-step-panel [value]="6">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                            <div class="flex flex-wrap justify-center gap-4">
+                                <form [formGroup]="professionalSummaryForm">
+                                    <textarea formControlName="summary"
+                                        placeholder="Describe your professional summary"></textarea>
+
+                                    <div class="flex pt-6 justify-end">
+                                        <p-button (onClick)="activateCallback(5)" label="Back" severity="secondary"
+                                            icon="pi pi-arrow-left" />
+                                        <p-button (onClick)="onSubmit(activateCallback(7))" label="Preview"
+                                            icon="pi pi-arrow-right" iconPos="right"
+                                            [disabled]="professionalSummaryForm.invalid" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+            </p-step-panels>
+        </p-stepper>
+    </div>
+</p-card>
+
+
+<!-- <div id="resumePreview">
+        <h2>{{ resumeData.name }}</h2>
+        <p>Email: {{ resumeData.email }}</p>
+        <p>Phone: {{ resumeData.phone }}</p>
+        <p><strong>Summary:</strong> {{ resumeData.summary }}</p>
+        <h3>Skills</h3>
+        <ul>
+            <li *ngFor="let skill of resumeData.skills">{{ skill }}</li>
+        </ul>
+        <h3>Experience</h3>
+        <ul>
+            <li *ngFor="let exp of resumeData.experience">{{ exp.company }} - {{ exp.role }} ({{ exp.duration }})</li>
+        </ul>
+    </div>
+
+    <button (click)="generatePDF()">Download PDF</button> -->
