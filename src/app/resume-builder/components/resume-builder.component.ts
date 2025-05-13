@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -23,12 +23,38 @@ interface UploadEvent {
   files: File[];
 }
 
+interface Project {
+  projectName: string;
+  projectDescription: string;
+  techStack: string;
+}
+
+interface Award {
+  awardTitle: string;
+  awardedDate: Date;
+}
+
+interface Certification {
+  certificate: string;
+  certificateExpiryDate: Date;
+}
+
 interface Experience {
   company: string;
   role: string;
   fromDate: Date;
   toDate: Date;
+  projects?: Project[];
 }
+
+interface Qualification {
+  qualification: string;
+  grade: string;
+  yearOfPassing: Date;
+  institutionName: string;
+  placeOfStudy: string;
+}
+
 @Component({
   standalone: true,
   selector: 'app-resume-builder',
@@ -54,18 +80,17 @@ export class ResumeBuilderComponent {
 
   profileForm!: FormGroup;
   profilePictureForm!: FormGroup;
-  // skillsForm!: FormGroup;
-  // awardsForm!: FormGroup;
-  // certificationsForm!: FormGroup;
-  // innovationsForm!: FormGroup;
   profileHighlightsForm!: FormGroup;
-  experienceDetailsForm!: FormGroup;
-  educationalQualificationsForm!: FormGroup;
+  professionalHistoryForm!: FormGroup;
   professionalSummaryForm!: FormGroup;
   selectedFile: File | null = null;
   resumeData: ResumeData = new ResumeData;
   activeStep: number = 1;
+  awardsList: Award[] = [];
+  certificationsList: Certification[] = [];
   experiences: Experience[] = [];
+  qualifications: Qualification[] = [];
+
 
   constructor(private readonly fb: FormBuilder, private readonly http: HttpClient, private readonly resumeService: ResumeService) {
 
@@ -92,19 +117,9 @@ export class ResumeBuilderComponent {
       awards: this.fb.array([]),
       certifications: this.fb.array([])
     });
-    this.experienceDetailsForm = this.fb.group({
+    this.professionalHistoryForm = this.fb.group({
       experienceDetails: this.fb.array([]),
-    });
-    this.educationalQualificationsForm = this.fb.group({
-      educationalQualifications: this.fb.array([
-        new FormGroup({
-          qualification: new FormControl(''),
-          grade: new FormControl(''),
-          monthYearOfPassing: new FormControl(''),
-          institutionName: new FormControl(''),
-          placeOfStudy: new FormControl('')
-        })
-      ]),
+      educationalQualifications: this.fb.array([])
     });
     this.professionalSummaryForm = this.fb.group({
       summary: ['', Validators.required],
@@ -192,6 +207,7 @@ export class ResumeBuilderComponent {
   }
 
   addAwards(award: { awardTitle: string; awardedDate: any; }): void {
+    this.awardsList = [...this.awardsList, award];
     this.awards.push(this.createAwardsGroup(
       award.awardTitle,
       award.awardedDate
@@ -214,6 +230,7 @@ export class ResumeBuilderComponent {
   }
 
   addCertifications(certification: { certificate: string; certificateExpiryDate: any; }): void {
+    this.certificationsList = [...this.certificationsList, certification];
     this.certifications.push(this.createCertificationsGroup(
       certification.certificate,
       certification.certificateExpiryDate
@@ -224,82 +241,62 @@ export class ResumeBuilderComponent {
     return this.certifications.at(index) as FormGroup;
   }
 
-  /* get innovations(): FormArray {
-    return this.profileHighlightsForm.get('innovations') as FormArray;
-  }
-
-  private createInnovationsGroup(innovation: string = '', innovationDescription: string = ''): FormGroup {
-    return this.fb.group({
-      innovation: [innovation],
-      innovationDescription: [innovationDescription]
-    });
-  }
-
-  addInnovations(innovation: { innovation: string; innovationDescription: string }): void {
-    this.innovations.push(this.createInnovationsGroup(
-      innovation.innovation,
-      innovation.innovationDescription
-    ));
-  }
-
-  getInnovationsGroup(index: number): FormGroup {
-    return this.innovations.at(index) as FormGroup;
-  } */
-
   get experienceDetails(): FormArray {
-    return this.experienceDetailsForm.get('experienceDetails') as FormArray;
+    return this.professionalHistoryForm.get('experienceDetails') as FormArray;
   }
 
   getExperienceGroup(index: number): FormGroup {
     return this.experienceDetails.at(index) as FormGroup;
   }
 
-  private createExperiencesGroup(company: string = '', role: string = '', fromDate: any = null, toDate: any = null): FormGroup {
+  private createExperiencesGroup(company: string = '', role: string = '', fromDate: any = null, toDate: any = null, projects: Project[] = []): FormGroup {
     return this.fb.group({
       company: [company, Validators.required],
       role: [role, Validators.required],
       fromDate: [new Date(fromDate), Validators.required],
-      toDate: [toDate ? new Date(toDate) : null]
+      toDate: [toDate ? new Date(toDate) : null],
+      projects: [projects]
     });
   }
 
-  addExperience(experience: { company: string; role: string; fromDate: any; toDate: any }) {
+  addExperience(experience: { company: string; role: string; fromDate: any; toDate: any; projects?: Project[] }): void {
     this.experiences = [...this.experiences, experience];
     this.experienceDetails.push(this.createExperiencesGroup(
       experience.company,
       experience.role,
       experience.fromDate,
-      experience.toDate));
+      experience.toDate,
+      experience.projects));
   }
 
   get educationalQualifications(): FormArray {
-    return this.educationalQualificationsForm.get('educationalQualifications') as FormArray;
+    return this.professionalHistoryForm.get('educationalQualifications') as FormArray;
   }
 
   getEducationalQualificationGroup(index: number): FormGroup {
     return this.educationalQualifications.at(index) as FormGroup;
   }
 
-  private createEduQualificationsGroup(qualification: string = '', grade: string = '', monthYearOfPassing: string = '', institutionName: string = '', placeOfStudy: string = ''): FormGroup {
+  private createEduQualificationsGroup(qualification: string = '', grade: string = '', yearOfPassing: any = null, institutionName: string = '', placeOfStudy: string = ''): FormGroup {
     return this.fb.group({
       qualification: [qualification, Validators.required],
       grade: [grade, Validators.required],
-      monthYearOfPassing: [monthYearOfPassing, Validators.required],
+      yearOfPassing: [new Date(yearOfPassing), Validators.required],
       institutionName: [institutionName, Validators.required],
       placeOfStudy: [placeOfStudy, Validators.required]
     });
   }
 
-  addEducationalQualifications(educationalDetail: { qualification: string; grade: string; monthYearOfPassing: string; institutionName: string; placeOfStudy: string }) {
+  addEducationalQualifications(educationalDetail: { qualification: string; grade: string; yearOfPassing: any; institutionName: string; placeOfStudy: string }) {
+    this.qualifications = [...this.qualifications, educationalDetail];
     this.educationalQualifications.push(this.createEduQualificationsGroup(
       educationalDetail.qualification,
       educationalDetail.grade,
-      educationalDetail.monthYearOfPassing,
+      educationalDetail.yearOfPassing,
       educationalDetail.institutionName,
       educationalDetail.placeOfStudy
     ));
   }
-
 
   generatePDF() {
     const DATA = document.getElementById('resumePreview');
