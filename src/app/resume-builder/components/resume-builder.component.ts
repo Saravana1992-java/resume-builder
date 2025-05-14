@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { CommonModule } from '@angular/common';
@@ -17,6 +17,7 @@ import { FileUpload, FileUploadEvent } from 'primeng/fileupload';
 import { RatingModule } from 'primeng/rating';
 import { TagModule } from 'primeng/tag';
 import { TimelineModule } from 'primeng/timeline';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 interface UploadEvent {
   originalEvent: Event;
@@ -44,6 +45,7 @@ interface Experience {
   role: string;
   fromDate: Date;
   toDate: Date;
+  isCurrentJob: boolean;
   projects?: Project[];
 }
 
@@ -70,8 +72,8 @@ interface Qualification {
     FileUpload,
     RatingModule,
     TagModule,
-    TimelineModule
-
+    TimelineModule,
+    ToggleSwitchModule
   ],
   templateUrl: './resume-builder.component.html',
   styleUrl: './resume-builder.component.css'
@@ -88,8 +90,8 @@ export class ResumeBuilderComponent {
   activeStep: number = 1;
   awardsList: Award[] = [];
   certificationsList: Certification[] = [];
-  experiences: Experience[] = [];
   qualifications: Qualification[] = [];
+  experiences: Experience[] = [];
 
 
   constructor(private readonly fb: FormBuilder, private readonly http: HttpClient, private readonly resumeService: ResumeService) {
@@ -118,8 +120,8 @@ export class ResumeBuilderComponent {
       certifications: this.fb.array([])
     });
     this.professionalHistoryForm = this.fb.group({
-      experienceDetails: this.fb.array([]),
-      educationalQualifications: this.fb.array([])
+      educationalQualifications: this.fb.array([]),
+      experienceDetails: this.fb.array([])
     });
     this.professionalSummaryForm = this.fb.group({
       summary: ['', Validators.required],
@@ -249,22 +251,24 @@ export class ResumeBuilderComponent {
     return this.experienceDetails.at(index) as FormGroup;
   }
 
-  private createExperiencesGroup(company: string = '', role: string = '', fromDate: any = null, toDate: any = null, projects: Project[] = []): FormGroup {
+  private createExperiencesGroup(company: string = '', role: string = '', fromDate: any = null, isCurrentJob: any = null, toDate: any = null, projects: Project[] = []): FormGroup {
     return this.fb.group({
       company: [company, Validators.required],
       role: [role, Validators.required],
       fromDate: [new Date(fromDate), Validators.required],
+      isCurrentJob: [isCurrentJob, Validators.required],
       toDate: [toDate ? new Date(toDate) : null],
       projects: [projects]
     });
   }
 
-  addExperience(experience: { company: string; role: string; fromDate: any; toDate: any; projects?: Project[] }): void {
+  addExperience(experience: { company: string; role: string; fromDate: any; isCurrentJob: any; toDate: any; projects?: Project[] }): void {
     this.experiences = [...this.experiences, experience];
     this.experienceDetails.push(this.createExperiencesGroup(
       experience.company,
       experience.role,
       experience.fromDate,
+      experience.isCurrentJob,
       experience.toDate,
       experience.projects));
   }

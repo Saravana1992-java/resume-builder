@@ -201,7 +201,7 @@
                                                     <label for="skillName">Skill</label>
                                                 </p-floatlabel>
                                                 <div
-                                                    style="box-sizing: border-box; display: flex; justify-content: center; padding-block: var(--p-inputtext-padding-y); padding-inline: var(--p-inputtext-padding-x);">
+                                                    style="box-sizing: border-box; display: flex; justify-content: center; padding-block: var(--p-inputtext-padding-y); padding-inline: var(--p-inputtext-padding-x); padding: 20px;">
                                                     <p-rating #skillRating id="skillRating"></p-rating>
                                                 </div>
                                                 <div
@@ -318,12 +318,63 @@
 
                 <p-step-panel [value]="4">
                     <ng-template #content let-activateCallback="activateCallback">
-                        <div
-                            style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <div class="step-panel">
                             <h3>Add your professional history</h3>
                             <form [formGroup]="professionalHistoryForm">
-                                <div style="display: flex; gap: 20px;">
-                                    <div style="display: flow; gap: 10px;">
+                                <div class="form-container">
+                                    <div class="form-field-container">
+                                        <div style="display: flow; gap: 10px;">
+                                            <div class="field" style="display: flex; gap: 10px;">
+                                                <div style="display: flow; gap: 10px;">
+                                                    <p-floatlabel variant="in">
+                                                        <input pInputText #qualification />
+                                                        <label for="qualificationInput">Course</label>
+                                                    </p-floatlabel>
+                                                    <p-floatlabel variant="in">
+                                                        <input pInputText #grade />
+                                                        <label for="grade">Grade/Percentage</label>
+                                                    </p-floatlabel>
+                                                    <p-floatlabel variant="in">
+                                                        <p-datepicker inputId="yearOfPassing" #yearOfPassing
+                                                            appendTo="body" class="max-w-full" dateFormat="dd.mm.yy"
+                                                            [showTime]="false"></p-datepicker>
+                                                        <label for="yearOfPassing">Year Of Passing</label>
+                                                    </p-floatlabel>
+                                                    <p-floatlabel variant="in">
+                                                        <input pInputText #institutionName />
+                                                        <label for="institutionName">Institution Name</label>
+                                                    </p-floatlabel>
+                                                    <p-floatlabel variant="in">
+                                                        <input pInputText #placeOfStudy />
+                                                        <label for="placeOfStudy">Place Of Study</label>
+                                                    </p-floatlabel>
+                                                    <div
+                                                        style="display: flex; align-items: flex-end; justify-content: center;">
+                                                        <p-button
+                                                            (onClick)="addEducationalQualifications({ qualification: qualification.value, grade: grade.value, yearOfPassing: yearOfPassing.value, institutionName: institutionName.value, placeOfStudy: placeOfStudy.value })"
+                                                            label="Add Qualification(s)"
+                                                            severity="secondary"></p-button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p-timeline [value]="qualifications" [style]="{ 'line-height': '1.6'}">
+                                                    <ng-template #opposite let-qualification>
+                                                        <small class="text-surface-500 dark:text-surface-400">
+                                                            {{ qualification.grade}}
+                                                            {{ qualification.yearOfPassing | date: 'dd.MM.yyyy' }}
+                                                        </small>
+                                                    </ng-template>
+                                                    <ng-template #content let-qualification>
+                                                        <strong>{{ qualification.qualification }}</strong> at
+                                                        {{ qualification.institutionName }},
+                                                        {{ qualification.placeOfStudy }}
+                                                    </ng-template>
+                                                </p-timeline>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-field-container">
                                         <div class="field" style="display: flex; gap: 10px;">
                                             <div style="display: flow; gap: 10px;">
                                                 <p-floatlabel variant="in">
@@ -340,69 +391,28 @@
                                                         [showTime]="false"></p-datepicker>
                                                     <label for="fromDate">Date Of Joining</label>
                                                 </p-floatlabel>
+                                                <div
+                                                    style="box-sizing: border-box; display: flex; justify-content: center; align-items:center; margin: 5px 0px; border: 1px solid var(--p-inputtext-border-color);border-radius: 6px;">
+                                                    <label for="isCurrentJob">Presently Employed Here: </label>
+                                                    <p-toggleswitch #isCurrentJob inputId="isCurrentJob"
+                                                        [style]="{'display': 'flex', 'justify-content': 'center', 'align-items':'center'}" />
+                                                </div>
                                                 <p-floatlabel variant="in">
                                                     <p-datepicker inputId="toDate" #toDate appendTo="body"
-                                                        class="max-w-full" dateFormat="dd.mm.yy"
-                                                        [showTime]="false"></p-datepicker>
+                                                        class="max-w-full" dateFormat="dd.mm.yy" [showTime]="false"
+                                                        [disabled]="isCurrentJob.modelValue"></p-datepicker>
                                                     <label for="toDate">Last Working Day</label>
                                                 </p-floatlabel>
-                                            </div>
-                                            <div style="display: flex; align-items: flex-end; justify-content: center;">
-                                                <p-button
-                                                    (onClick)="addExperience({ company: company.value, role: role.value, fromDate: fromDate.value, toDate: toDate.value, projects: [] })"
-                                                    label="Add Work Experience(s)" severity="secondary"></p-button>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p-timeline [value]="experiences">
-                                                <ng-template #opposite let-experience>
-                                                    <small class="text-surface-500 dark:text-surface-400">
-                                                        {{ experience.fromDate | date: 'dd.MM.yyyy' }} -
-                                                        {{ experience.toDate | date: 'dd.MM.yyyy' }}
-                                                    </small>
-                                                </ng-template>
-                                                <ng-template #content let-experience>
-                                                    <strong>{{ experience.company }}</strong> -
-                                                    {{ experience.role }}
-                                                </ng-template>
-                                            </p-timeline>
-                                        </div>
-                                    </div>
-                                    <div style="display: flow; gap: 10px;">
-                                        <div class="field" style="display: flex; gap: 10px;">
-                                            <div style="display: flow; gap: 10px;">
-                                                <p-floatlabel variant="in">
-                                                    <input pInputText #qualification />
-                                                    <label for="qualificationInput">Course</label>
-                                                </p-floatlabel>
-                                                <p-floatlabel variant="in">
-                                                    <input pInputText #grade />
-                                                    <label for="grade">Grade/Percentage</label>
-                                                </p-floatlabel>
-                                                <p-floatlabel variant="in">
-                                                    <p-datepicker inputId="yearOfPassing" #yearOfPassing appendTo="body"
-                                                        class="max-w-full" dateFormat="dd.mm.yy"
-                                                        [showTime]="false"></p-datepicker>
-                                                    <label for="yearOfPassing">Year Of Passing</label>
-                                                </p-floatlabel>
-                                                <p-floatlabel variant="in">
-                                                    <input pInputText #institutionName />
-                                                    <label for="institutionName">Institution Name</label>
-                                                </p-floatlabel>
-                                                <p-floatlabel variant="in">
-                                                    <input pInputText #placeOfStudy />
-                                                    <label for="placeOfStudy">Place Of Study</label>
-                                                </p-floatlabel>
-                                            </div>
-                                            <div style="display: flex; align-items: flex-end; justify-content: center;">
-                                                <p-button
-                                                    (onClick)="addEducationalQualifications({ qualification: qualification.value, grade: grade.value, yearOfPassing: yearOfPassing.value, institutionName: institutionName.value, placeOfStudy: placeOfStudy.value })"
-                                                    label="Add Educational Qualification(s)"
-                                                    severity="secondary"></p-button>
+                                                <div
+                                                    style="display: flex; align-items: flex-end; justify-content: center;">
+                                                    <p-button
+                                                        (onClick)="addExperience({ company: company.value, role: role.value, fromDate: fromDate.value, isCurrentJob: isCurrentJob.modelValue, toDate: toDate.value, projects: [] })"
+                                                        label="Add Work History" severity="secondary"></p-button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
-                                            <p-timeline [value]="experiences">
+                                            <p-timeline [value]="experiences" [style]="{ 'line-height': '1.6'}">
                                                 <ng-template #opposite let-experience>
                                                     <small class="text-surface-500 dark:text-surface-400">
                                                         {{ experience.fromDate | date: 'dd.MM.yyyy' }} -
@@ -435,53 +445,7 @@
                         <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
                             <h3>Add your prject(s)</h3>
                             <form [formGroup]="professionalHistoryForm">
-                                <div style="display: flex; gap: 20px;">
-                                    <div style="display: flow; gap: 10px;">
-                                        <div class="field" style="display: flex; gap: 10px;">
-                                            <div style="display: flow; gap: 10px;">
-                                                <p-floatlabel variant="in">
-                                                    <input pInputText #company />
-                                                    <label for="company">Company Name</label>
-                                                </p-floatlabel>
-                                                <p-floatlabel variant="in">
-                                                    <input pInputText #role />
-                                                    <label for="role">Role</label>
-                                                </p-floatlabel>
-                                                <p-floatlabel variant="in">
-                                                    <p-datepicker inputId="fromDate" #fromDate appendTo="body"
-                                                        class="max-w-full" dateFormat="dd.mm.yy"
-                                                        [showTime]="false"></p-datepicker>
-                                                    <label for="fromDate">Date Of Joining</label>
-                                                </p-floatlabel>
-                                                <p-floatlabel variant="in">
-                                                    <p-datepicker inputId="toDate" #toDate appendTo="body"
-                                                        class="max-w-full" dateFormat="dd.mm.yy"
-                                                        [showTime]="false"></p-datepicker>
-                                                    <label for="toDate">Last Working Day</label>
-                                                </p-floatlabel>
-                                            </div>
-                                            <div style="display: flex; align-items: flex-end; justify-content: center;">
-                                                <p-button
-                                                    (onClick)="addExperience({ company: company.value, role: role.value, fromDate: fromDate.value, toDate: toDate.value, projects: [] })"
-                                                    label="Add Work Experience(s)" severity="secondary"></p-button>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p-timeline [value]="experiences">
-                                                <ng-template #opposite let-experience>
-                                                    <small class="text-surface-500 dark:text-surface-400">
-                                                        {{ experience.fromDate | date: 'dd.MM.yyyy' }} -
-                                                        {{ experience.toDate | date: 'dd.MM.yyyy' }}
-                                                    </small>
-                                                </ng-template>
-                                                <ng-template #content let-experience>
-                                                    <strong>{{ experience.company }}</strong> -
-                                                    {{ experience.role }}
-                                                </ng-template>
-                                            </p-timeline>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="flex pt-6 justify-between">
                                     <p-button (onClick)="activateCallback(4)" label="Back" severity="secondary"
                                         icon="pi pi-arrow-left" />
