@@ -75,7 +75,7 @@ interface Qualification {
     ToggleSwitchModule
   ],
   templateUrl: './resume-builder.component.html',
-  styleUrl: './resume-builder.component.css'
+  styleUrls: ['./resume-builder.component.css']
 })
 export class ResumeBuilderComponent {
 
@@ -97,15 +97,11 @@ export class ResumeBuilderComponent {
 
   }
 
-  hasFormErrors(): boolean {
-    return this.profileForm.invalid && this.profileForm.touched;
-  }
-
   ngOnInit(): void {
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
       currentJobTitle: ['', Validators.required],
-      specilalizedSkillTitle: ['', Validators.required],
+      specializedSkillTiTle: ['', Validators.required],
       dateOfBirth: [null, Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
@@ -282,6 +278,22 @@ export class ResumeBuilderComponent {
     ));
   }
 
+  onSubmitProfileForm(activateCallback: (step: number) => void): void {
+    if (this.profileForm.valid) {
+      const profileData = this.profileForm.value;
+      console.log('Profile Data:', profileData);
+
+      // Send the profile data to the server
+      this.resumeService.saveProfileData(profileData).subscribe(() => {
+        console.log('Profile Data Saved Successfully');
+        activateCallback(2); // ✅ Move to the next step
+      });
+    } else {
+      console.error('Profile form is invalid');
+      this.profileForm.markAllAsTouched(); // Mark all fields as touched to show validation errors
+    }
+  }
+
   onSubmitProfilePicture(activateCallback: (step: number) => void): void {
     if (this.profilePictureForm.valid) {
       const profilePictureData = this.profilePictureForm.value;
@@ -296,20 +308,48 @@ export class ResumeBuilderComponent {
     }
   }
 
-  onSubmit(activateCallback: (step: number) => void) {
-    if (this.selectedFile) {
-      const formData = new FormData();
-      formData.append('profilePicture', this.selectedFile);
-      this.resumeService.saveProfilePicture(formData).subscribe(() => {
-        console.log('Profile Picture Saved Successfully');
-        activateCallback(2); // ✅ Move to the next step
+  onSubmitProfileHighlightsForm(activateCallback: (step: number) => void): void {
+    if (this.profileHighlightsForm.valid) {
+      const profileHighlightsData = this.profileHighlightsForm.value;
+
+      // Send the profile highlights data to the server
+      this.resumeService.saveProfileHighlights(profileHighlightsData).subscribe(() => {
+        console.log('Profile Highlights Saved Successfully');
+        activateCallback(4); // ✅ Move to the next step
       });
+    } else {
+      console.error('Profile Highlights form is invalid');
+      this.profileHighlightsForm.markAllAsTouched(); // Mark all fields as touched to show validation errors
     }
-    else if (this.activeStep === 1 && this.profileForm.valid) {
-      this.resumeService.savePersonalDetails(this.profileForm.value).subscribe(() => {
-        console.log('Saved Successfully');
-        activateCallback(3); // ✅ Move to the next step
+  }
+
+  onSubmitProfessionalHistoryForm(activateCallback: (step: number) => void): void {
+    if (this.professionalHistoryForm.valid) {
+      const professionalHistoryData = this.professionalHistoryForm.value;
+
+      // Send the professional history data to the server
+      this.resumeService.saveProfessionalHistory(professionalHistoryData).subscribe(() => {
+        console.log('Professional History Saved Successfully');
+        activateCallback(5); // ✅ Move to the next step
       });
+    } else {
+      console.error('Professional History form is invalid');
+      this.professionalHistoryForm.markAllAsTouched(); // Mark all fields as touched to show validation errors
+    }
+  }
+
+  onSubmitProfessionalSummaryForm(activateCallback: (step: number) => void): void {
+    if (this.professionalSummaryForm.valid) {
+      const professionalSummaryData = this.professionalSummaryForm.value;
+
+      // Send the professional summary data to the server
+      this.resumeService.saveProfessionalSummary(professionalSummaryData).subscribe(() => {
+        console.log('Professional Summary Saved Successfully');
+        activateCallback(6); // ✅ Move to the next step
+      });
+    } else {
+      console.error('Professional Summary form is invalid');
+      this.professionalSummaryForm.markAllAsTouched(); // Mark all fields as touched to show validation errors
     }
   }
 

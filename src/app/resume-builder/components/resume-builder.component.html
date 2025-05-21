@@ -128,13 +128,13 @@
                                     <div class="form-field-container">
                                         <div class="error-message-container">
                                             <p-floatlabel variant="in">
-                                                <input pInputText id="specilalizedSkillTitle"
-                                                    formControlName="specilalizedSkillTitle" />
-                                                <label for="specilalizedSkillTitle">Specialized Job Title</label>
+                                                <input pInputText id="specializedSkillTiTle"
+                                                    formControlName="specializedSkillTiTle" />
+                                                <label for="specializedSkillTiTle">Specialized Job Title</label>
                                             </p-floatlabel>
                                             <div style="line-height:0.5">
                                                 <small
-                                                    *ngIf="profileForm.get('specilalizedSkillTitle')?.hasError('required') && profileForm.get('specilalizedSkillTitle')?.touched"
+                                                    *ngIf="profileForm.get('specializedSkillTiTle')?.hasError('required') && profileForm.get('specializedSkillTiTle')?.touched"
                                                     class="error">
                                                     Specialized Job Title is required.
                                                 </small>
@@ -217,7 +217,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-button-container">
-                                    <p-button (onClick)="onSubmit(activateCallback(2))" label="Next"
+                                    <p-button (onClick)="onSubmitProfileForm(activateCallback(2))" label="Next"
                                         icon="pi pi-arrow-right" iconPos="right" [disabled]="profileForm.invalid" />
                                 </div>
                             </form>
@@ -388,8 +388,8 @@
                                 <div class="submit-button-container">
                                     <p-button (onClick)="activateCallback(2)" label="Back" severity="secondary"
                                         icon="pi pi-arrow-left" iconPos="left" />
-                                    <p-button (onClick)="onSubmit(activateCallback(4))" label="Next"
-                                        icon="pi pi-arrow-right" iconPos="right"
+                                    <p-button (onClick)="onSubmitProfessionalHistoryForm(activateCallback(4))"
+                                        label="Next" icon="pi pi-arrow-right" iconPos="right"
                                         [disabled]="profileHighlightsForm.invalid" />
                                 </div>
                             </form>
@@ -514,8 +514,8 @@
                                     style="margin-top: 40px; display: flex; gap: 20px; align-items: center; justify-content: center;">
                                     <p-button (onClick)="activateCallback(3)" label="Back" severity="secondary"
                                         icon="pi pi-arrow-left" iconPos="left" />
-                                    <p-button (onClick)="onSubmit(activateCallback(5))" label="Next"
-                                        icon="pi pi-arrow-right" iconPos="right"
+                                    <p-button (onClick)="onSubmitProfessionalHistoryForm(activateCallback(5))"
+                                        label="Next" icon="pi pi-arrow-right" iconPos="right"
                                         [disabled]="profileHighlightsForm.invalid" />
                                 </div>
                             </form>
@@ -532,8 +532,8 @@
                                 <div class="flex pt-6 justify-between">
                                     <p-button (onClick)="activateCallback(4)" label="Back" severity="secondary"
                                         icon="pi pi-arrow-left" />
-                                    <p-button (onClick)="onSubmit(activateCallback(6))" label="Next"
-                                        icon="pi pi-arrow-right" iconPos="right"
+                                    <p-button (onClick)="onSubmitProfessionalHistoryForm(activateCallback(6))"
+                                        label="Next" icon="pi pi-arrow-right" iconPos="right"
                                         [disabled]="educationalQualifications.invalid" />
                                 </div>
                             </form>
@@ -552,8 +552,8 @@
                                     <div class="flex pt-6 justify-end">
                                         <p-button (onClick)="activateCallback(5)" label="Back" severity="secondary"
                                             icon="pi pi-arrow-left" />
-                                        <p-button (onClick)="onSubmit(activateCallback(7))" label="Preview"
-                                            icon="pi pi-arrow-right" iconPos="right"
+                                        <p-button (onClick)="onSubmitProfessionalSummaryForm(activateCallback(7))"
+                                            label="Preview" icon="pi pi-arrow-right" iconPos="right"
                                             [disabled]="professionalSummaryForm.invalid" />
                                     </div>
                                 </form>

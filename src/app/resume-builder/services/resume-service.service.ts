@@ -12,19 +12,19 @@ export class ResumeService {
 
 
   // profile form
-  savePersonalDetails(formData: any) {
+  saveProfileData(formData: any) {
     return this.http.post(this.apiUrl, formData);
   }
 
-  getPersonalDetails() {
+  getProfileData() {
     return this.http.get(this.apiUrl);
   }
 
-  updatePersonalDetails(formData: any) {
+  updateProfileData(formData: any) {
     return this.http.put(this.apiUrl, formData);
   }
 
-  deletePersonalDetails(id: number) {
+  deleteProfileData(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
@@ -46,53 +46,36 @@ export class ResumeService {
   }
 
   // skills form
-  saveSkills(formData: any) {
+  saveProfileHighlights(formData: any) {
     return this.http.post(this.apiUrl, formData);
   }
 
-  getSkills() {
+  getProfileHighlights() {
     return this.http.get(this.apiUrl);
   }
 
-  updateSkills(formData: any) {
+  updateProfileHighlights(formData: any) {
     return this.http.put(this.apiUrl, formData);
   }
 
-  deleteSkills(id: number) {
+  deleteProfileHighlights(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
   // experiences form 
-  saveExperienceDetails(formData: any) {
+  saveProfessionalHistory(formData: any) {
     return this.http.post(this.apiUrl, formData);
   }
 
-  getExperienceDetails() {
+  getProfessionalHistory() {
     return this.http.get(this.apiUrl);
   }
 
-  updateExperienceDetails(formData: any) {
+  updateProfessionalHistory(formData: any) {
     return this.http.put(this.apiUrl, formData);
   }
 
-  deleteExperienceDetails(id: number) {
-    return this.http.delete(`${this.apiUrl}/${id}`);
-  }
-
-  // educational qualifications form
-  saveEducationalQualifications(formData: any) {
-    return this.http.post(this.apiUrl, formData);
-  }
-
-  getEducationalQualifications() {
-    return this.http.get(this.apiUrl);
-  }
-
-  updateEducationalQualifications(formData: any) {
-    return this.http.put(this.apiUrl, formData);
-  }
-
-  deleteEducationalQualifications(id: number) {
+  deleteProfessionalHistory(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
