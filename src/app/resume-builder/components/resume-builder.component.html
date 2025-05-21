@@ -95,49 +95,113 @@
                             <form [formGroup]="profileForm">
                                 <div class="form-container">
                                     <div class="form-field-container">
-                                        <p-floatlabel variant="in">
-                                            <input pInputText id="name" formControlName="name" />
-                                            <label for="name">Name</label>
-                                        </p-floatlabel>
+                                        <div class="error-message-container">
+                                            <p-floatlabel variant="in">
+                                                <input pInputText id="name" formControlName="name" />
+                                                <label for="name">Name</label>
+                                            </p-floatlabel>
+                                            <div style="line-height:0.5">
+                                                <small
+                                                    *ngIf="profileForm.get('name')?.hasError('required') && profileForm.get('name')?.touched"
+                                                    class="error">
+                                                    Name is required.
+                                                </small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-field-container">
-                                        <p-floatlabel variant="in">
-                                            <input pInputText id="currentJobTitle" formControlName="currentJobTitle" />
-                                            <label for="currentJobTitle">Current Job Title</label>
-                                        </p-floatlabel>
+                                        <div class="error-message-container">
+                                            <p-floatlabel variant="in">
+                                                <input pInputText id="currentJobTitle"
+                                                    formControlName="currentJobTitle" />
+                                                <label for="currentJobTitle">Current Job Title</label>
+                                            </p-floatlabel>
+                                            <div style="line-height:0.5">
+                                                <small
+                                                    *ngIf="profileForm.get('currentJobTitle')?.hasError('required') && profileForm.get('currentJobTitle')?.touched"
+                                                    class="error">
+                                                    Job Title is required.
+                                                </small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-field-container">
-                                        <p-floatlabel variant="in">
-                                            <input pInputText id="specilalizedSkillTitle"
-                                                formControlName="specilalizedSkillTitle" />
-                                            <label for="specilalizedSkillTitle">Specialized Job Title</label>
-                                        </p-floatlabel>
+                                        <div class="error-message-container">
+                                            <p-floatlabel variant="in">
+                                                <input pInputText id="specilalizedSkillTitle"
+                                                    formControlName="specilalizedSkillTitle" />
+                                                <label for="specilalizedSkillTitle">Specialized Job Title</label>
+                                            </p-floatlabel>
+                                            <div style="line-height:0.5">
+                                                <small
+                                                    *ngIf="profileForm.get('specilalizedSkillTitle')?.hasError('required') && profileForm.get('specilalizedSkillTitle')?.touched"
+                                                    class="error">
+                                                    Specialized Job Title is required.
+                                                </small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-field-container">
-                                        <p-floatlabel variant="in">
-                                            <p-datepicker inputId="dateOfBirth" class="max-w-full"
-                                                formControlName="dateOfBirth" appendTo="body" dateFormat="dd.mm.yy"
-                                                [showTime]="false"></p-datepicker>
-                                            <label for="dateOfBirth">Date Of Birth</label>
-                                        </p-floatlabel>
+                                        <div class="error-message-container">
+                                            <p-floatlabel variant="in">
+                                                <p-datepicker inputId="dateOfBirth" class="max-w-full"
+                                                    formControlName="dateOfBirth" appendTo="body" dateFormat="dd.mm.yy"
+                                                    [showTime]="false"></p-datepicker>
+                                                <label for="dateOfBirth">Date Of Birth</label>
+                                            </p-floatlabel>
+                                            <div style="line-height:0.5">
+                                                <small
+                                                    *ngIf="profileForm.get('dateOfBirth')?.hasError('required') && profileForm.get('dateOfBirth')?.touched"
+                                                    class="error">
+                                                    DOB is required.
+                                                </small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-field-container">
-                                        <p-floatlabel variant="in">
-                                            <input pInputText id="email" formControlName="email" />
-                                            <label for="email">Email</label>
-                                        </p-floatlabel>
+                                        <div class="error-message-container">
+                                            <p-floatlabel variant="in">
+                                                <input pInputText id="email" formControlName="email" />
+                                                <label for="email">Email</label>
+                                            </p-floatlabel>
+                                            <div style="line-height:0.5">
+                                                <small
+                                                    *ngIf="profileForm.get('email')?.hasError('required') && profileForm.get('email')?.touched"
+                                                    class="error">
+                                                    Email is required.
+                                                </small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-field-container">
-                                        <p-floatlabel variant="in">
-                                            <input pInputText id="phone" formControlName="phone" pKeyFilter="int" />
-                                            <label for="phone">Phone</label>
-                                        </p-floatlabel>
+                                        <div class="error-message-container">
+                                            <p-floatlabel variant="in">
+                                                <input pInputText id="phone" formControlName="phone" pKeyFilter="int" />
+                                                <label for="phone">Phone</label>
+                                            </p-floatlabel>
+                                            <div style="line-height:0.5">
+                                                <small
+                                                    *ngIf="profileForm.get('phone')?.hasError('required') && profileForm.get('phone')?.touched"
+                                                    class="error">
+                                                    Phone is required.
+                                                </small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-field-container">
-                                        <p-floatlabel variant="in">
-                                            <input pInputText id="address" formControlName="address" />
-                                            <label for="address">Address</label>
-                                        </p-floatlabel>
+                                        <div class="error-message-container">
+                                            <p-floatlabel variant="in">
+                                                <input pInputText id="address" formControlName="address" />
+                                                <label for="address">Address</label>
+                                            </p-floatlabel>
+                                            <div style="line-height:0.5">
+                                                <small
+                                                    *ngIf="profileForm.get('address')?.hasError('required') && profileForm.get('address')?.touched"
+                                                    class="error">
+                                                    Address is required.
+                                                </small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-field-container">
                                         <p-floatlabel variant="in">
@@ -164,25 +228,39 @@
 
                 <p-step-panel [value]="2">
                     <ng-template #content let-activateCallback="activateCallback">
-                        <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
-                            <div class="flex flex-wrap justify-center gap-4">
-                                <h3>Upload your official photo</h3>
-                                <form [formGroup]="profilePictureForm">
-                                    <div class="card flex flex-col gap-6 items-center justify-center">
-                                        <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload"
-                                            uploadLabel="Upload" uploadIcon="pi pi-check" cancelLabel="Cancel"
-                                            cancelIcon="pi pi-times" accept="image/*" maxFileSize="1000000"
-                                            accept="image/*" maxFileSize="1000000" (onUpload)="onUpload($event)" />
+                        <div class="step-panel">
+                            <h3>Upload Your Professional Photograph</h3>
+                            <form [formGroup]="profilePictureForm">
+                                <div class="form-container">
+                                    <div class="form-field-container">
+                                        <p-floatlabel variant="in">
+                                            <div class="card flex flex-col gap-6 items-center justify-center">
+                                                <p-fileupload #selectedFile mode="basic" chooseLabel="Choose Image"
+                                                    chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000"
+                                                    (onSelect)="onImageSelect($event)"
+                                                    (onClear)="onImageClear(selectedFile)">
+                                                </p-fileupload>
+                                                <div *ngIf="imagePreview" class="image-preview-container">
+                                                    <div class="image-wrapper">
+                                                        <img [src]="imagePreview" alt="Preview" class="image-preview" />
+                                                        <i style="position: absolute; cursor: pointer;"
+                                                            class="pi pi-times clear-icon"
+                                                            (click)="onImageClear(selectedFile)"
+                                                            (keydown.enter)="onImageClear(selectedFile)"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </p-floatlabel>
                                     </div>
-
-                                    <div class="flex pt-6 justify-end">
-                                        <p-button (onClick)="activateCallback(1)" label="Back" severity="secondary"
-                                            icon="pi pi-arrow-left" />
-                                        <p-button (onClick)="onSubmit(activateCallback(3))" label="Next"
-                                            icon="pi pi-arrow-right" iconPos="right" [disabled]="profileForm.invalid" />
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="submit-button-container">
+                                    <p-button (onClick)="activateCallback(1)" label="Back" severity="secondary"
+                                        icon="pi pi-arrow-left" iconPos="left" />
+                                    <p-button (onClick)="onSubmitProfilePicture(activateCallback(3))" label="Next"
+                                        icon="pi pi-arrow-right" iconPos="right"
+                                        [disabled]="profilePictureForm.invalid" />
+                                </div>
+                            </form>
                         </div>
                     </ng-template>
                 </p-step-panel>
@@ -208,7 +286,8 @@
                                                     style="display: flex; align-items: flex-end; justify-content: center;">
                                                     <p-button
                                                         (onClick)="addSkill({ skillName: skillName.value, skillRating: skillRating.value })"
-                                                        label="Add Skill(s)" severity="secondary"></p-button>
+                                                        label="Add Skill(s)" severity="secondary"
+                                                        [disabled]="!skillName.value || !skillRating.value"></p-button>
                                                 </div>
                                             </div>
                                             <div formArrayName="skills"
@@ -247,7 +326,8 @@
                                                     style="display: flex; align-items: flex-end; justify-content: center;">
                                                     <p-button
                                                         (onClick)="addAwards({ awardTitle: awardTitle.value, awardedDate: awardedDate.value })"
-                                                        label="Add Award(s)" severity="secondary"></p-button>
+                                                        label="Add Award(s)" severity="secondary"
+                                                        [disabled]="!awardTitle.value || !awardedDate.value"></p-button>
                                                 </div>
                                             </div>
                                             <div>
@@ -282,7 +362,8 @@
                                                     style="display: flex; align-items: flex-end; justify-content: center;">
                                                     <p-button
                                                         (onClick)="addCertifications({ certificate: certificate.value, certificateExpiryDate: certificateExpiryDate.value })"
-                                                        label="Add Certifications(s)" severity="secondary"></p-button>
+                                                        label="Add Certifications(s)" severity="secondary"
+                                                        [disabled]="!certificate.value || !certificateExpiryDate.value"></p-button>
                                                 </div>
                                             </div>
                                             <div>
@@ -352,8 +433,8 @@
                                                         style="display: flex; align-items: flex-end; justify-content: center;">
                                                         <p-button
                                                             (onClick)="addEducationalQualifications({ qualification: qualification.value, grade: grade.value, yearOfPassing: yearOfPassing.value, institutionName: institutionName.value, placeOfStudy: placeOfStudy.value })"
-                                                            label="Add Qualification(s)"
-                                                            severity="secondary"></p-button>
+                                                            label="Add Qualification(s)" severity="secondary"
+                                                            [disabled]="!qualification.value || !grade.value || !yearOfPassing.value || !institutionName.value || !placeOfStudy.value"></p-button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -393,7 +474,8 @@
                                                 </p-floatlabel>
                                                 <div
                                                     style="box-sizing: border-box; display: flex; justify-content: center; align-items:center; margin: 5px 0px; border: 1px solid var(--p-inputtext-border-color);border-radius: 6px;">
-                                                    <label for="isCurrentJob">Presently Employed Here: </label>
+                                                    <label style="color: lightslategray;" for="isCurrentJob">Presently
+                                                        Employed Here: </label>
                                                     <p-toggleswitch #isCurrentJob inputId="isCurrentJob"
                                                         [style]="{'display': 'flex', 'justify-content': 'center', 'align-items':'center'}" />
                                                 </div>
@@ -407,7 +489,8 @@
                                                     style="display: flex; align-items: flex-end; justify-content: center;">
                                                     <p-button
                                                         (onClick)="addExperience({ company: company.value, role: role.value, fromDate: fromDate.value, isCurrentJob: isCurrentJob.modelValue, toDate: toDate.value, projects: [] })"
-                                                        label="Add Work History" severity="secondary"></p-button>
+                                                        label="Add Professional Experience" severity="secondary"
+                                                        [disabled]="!company.value || !role.value || !fromDate.value || (!isCurrentJob.modelValue && !toDate.value)"></p-button>
                                                 </div>
                                             </div>
                                         </div>
@@ -429,9 +512,9 @@
                                 </div>
                                 <div
                                     style="margin-top: 40px; display: flex; gap: 20px; align-items: center; justify-content: center;">
-                                    <p-button (onClick)="activateCallback(2)" label="Back" severity="secondary"
+                                    <p-button (onClick)="activateCallback(3)" label="Back" severity="secondary"
                                         icon="pi pi-arrow-left" iconPos="left" />
-                                    <p-button (onClick)="onSubmit(activateCallback(4))" label="Next"
+                                    <p-button (onClick)="onSubmit(activateCallback(5))" label="Next"
                                         icon="pi pi-arrow-right" iconPos="right"
                                         [disabled]="profileHighlightsForm.invalid" />
                                 </div>
@@ -443,7 +526,7 @@
                 <p-step-panel [value]="5">
                     <ng-template #content let-activateCallback="activateCallback">
                         <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
-                            <h3>Add your prject(s)</h3>
+                            <h3>Add project(s)</h3>
                             <form [formGroup]="professionalHistoryForm">
 
                                 <div class="flex pt-6 justify-between">

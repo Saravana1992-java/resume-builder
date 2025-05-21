@@ -9,11 +9,10 @@ import { StepperModule } from 'primeng/stepper';
 import { InputTextModule } from 'primeng/inputtext';
 import { ResumeService } from '../services/resume-service.service';
 import { HttpClient } from '@angular/common/http';
-import { ResumeValidators } from './resume-validators';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DatePicker } from 'primeng/datepicker';
 import { CardModule } from 'primeng/card';
-import { FileUpload, FileUploadEvent } from 'primeng/fileupload';
+import { FileUpload } from 'primeng/fileupload';
 import { RatingModule } from 'primeng/rating';
 import { TagModule } from 'primeng/tag';
 import { TimelineModule } from 'primeng/timeline';
@@ -92,27 +91,31 @@ export class ResumeBuilderComponent {
   certificationsList: Certification[] = [];
   qualifications: Qualification[] = [];
   experiences: Experience[] = [];
-
+  imagePreview: string | ArrayBuffer | null = null;
 
   constructor(private readonly fb: FormBuilder, private readonly http: HttpClient, private readonly resumeService: ResumeService) {
 
   }
 
+  hasFormErrors(): boolean {
+    return this.profileForm.invalid && this.profileForm.touched;
+  }
+
   ngOnInit(): void {
     this.profileForm = this.fb.group({
-      name: ['', Validators.required, ResumeValidators.nameValidator],
+      name: ['', Validators.required],
       currentJobTitle: ['', Validators.required],
-      specilalizedSkillTitle: [''],
-      dateOfBirth: [''],
+      specilalizedSkillTitle: ['', Validators.required],
+      dateOfBirth: [null, Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required, ResumeValidators.phoneNumberValidator],
+      phone: ['', Validators.required],
       address: ['', Validators.required],
-      linkedInProfile: ['', ResumeValidators.linkedInUrlValidator],
+      linkedInProfile: [''],
       personalWebsite: [''],
-      gitHubProfile: ['', ResumeValidators.gitHubUrlValidator]
+      gitHubProfile: ['']
     });
     this.profilePictureForm = this.fb.group({
-      profilePicture: [null]
+      profilePicture: [null, Validators.required]
     });
     this.profileHighlightsForm = this.fb.group({
       skills: this.fb.array([]),
@@ -128,49 +131,26 @@ export class ResumeBuilderComponent {
     });
   }
 
-  onUpload(event: FileUploadEvent) {
-    this.selectedFile = event.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.profilePictureForm.patchValue({
-        profilePicture: e.target?.result
-      });
-    };
-    reader.readAsDataURL(this.selectedFile);
+  onImageSelect(event: any): void {
+    const file = event.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target?.result ?? null;
+        this.profilePictureForm.patchValue({
+          profilePicture: e.target?.result // Store the base64 string in the form
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
-  onFileSelect(event: FileUploadEvent) {
-    this.selectedFile = event.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.profilePictureForm.patchValue({
-        profilePicture: e.target?.result
-      });
-    };
-    reader.readAsDataURL(this.selectedFile);
-  }
-
-  onFileRemove(event: FileUploadEvent) {
+  onImageClear(fileUpload: FileUpload): void {
+    this.imagePreview = null;
+    fileUpload.clear();
     this.profilePictureForm.patchValue({
-      profilePicture: null
+      profilePicture: null // Store the base64 string in the form
     });
-  }
-
-  onSubmit(activateCallback: (step: number) => void) {
-    if (this.selectedFile) {
-      const formData = new FormData();
-      formData.append('profilePicture', this.selectedFile);
-      this.resumeService.saveProfilePicture(formData).subscribe(() => {
-        console.log('Profile Picture Saved Successfully');
-        activateCallback(2); // ✅ Move to the next step
-      });
-    }
-    else if (this.activeStep === 1 && this.profileForm.valid) {
-      this.resumeService.savePersonalDetails(this.profileForm.value).subscribe(() => {
-        console.log('Saved Successfully');
-        activateCallback(3); // ✅ Move to the next step
-      });
-    }
   }
 
   get skills(): FormArray {
@@ -186,7 +166,7 @@ export class ResumeBuilderComponent {
 
   addSkill(skill: { skillName: string; skillRating: any }): void {
     const skillRating = Number(skill.skillRating);
-    if (!isNaN(skillRating)) { // Ensure the conversion is valid
+    if (!isNaN(skillRating)) {
       this.skills.push(this.createSkillGroup(skill.skillName, skillRating));
     } else {
       console.error('Invalid skillRating value:', skill.skillRating);
@@ -300,6 +280,37 @@ export class ResumeBuilderComponent {
       educationalDetail.institutionName,
       educationalDetail.placeOfStudy
     ));
+  }
+
+  onSubmitProfilePicture(activateCallback: (step: number) => void): void {
+    if (this.profilePictureForm.valid) {
+      const profilePictureData = this.profilePictureForm.value;
+
+      // Send the base64-encoded image to the server
+      this.resumeService.saveProfilePicture(profilePictureData).subscribe(() => {
+        console.log('Profile Picture Saved Successfully');
+        activateCallback(3); // ✅ Move to the next step
+      });
+    } else {
+      console.error('Profile picture form is invalid');
+    }
+  }
+
+  onSubmit(activateCallback: (step: number) => void) {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('profilePicture', this.selectedFile);
+      this.resumeService.saveProfilePicture(formData).subscribe(() => {
+        console.log('Profile Picture Saved Successfully');
+        activateCallback(2); // ✅ Move to the next step
+      });
+    }
+    else if (this.activeStep === 1 && this.profileForm.valid) {
+      this.resumeService.savePersonalDetails(this.profileForm.value).subscribe(() => {
+        console.log('Saved Successfully');
+        activateCallback(3); // ✅ Move to the next step
+      });
+    }
   }
 
   generatePDF() {
