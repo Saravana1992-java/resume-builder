@@ -145,8 +145,8 @@
                                         <div class="error-message-container">
                                             <p-floatlabel variant="in">
                                                 <p-datepicker inputId="dateOfBirth" class="max-w-full"
-                                                    formControlName="dateOfBirth" appendTo="body" dateFormat="dd.mm.yy"
-                                                    [showTime]="false"></p-datepicker>
+                                                    formControlName="dateOfBirth" appendTo="body" dateFormat="dd/mm/yy"
+                                                    [showTime]="false" [maxDate]="today"></p-datepicker>
                                                 <label for="dateOfBirth">Date Of Birth</label>
                                             </p-floatlabel>
                                             <div style="line-height:0.5">
@@ -318,8 +318,8 @@
                                                 </p-floatlabel>
                                                 <p-floatlabel variant="in">
                                                     <p-datepicker inputId="awardedDate" #awardedDate class="max-w-full"
-                                                        appendTo="body" dateFormat="dd.mm.yy"
-                                                        [showTime]="false"></p-datepicker>
+                                                        appendTo="body" dateFormat="dd/mm/yy" [showTime]="false"
+                                                        [maxDate]="today"></p-datepicker>
                                                     <label for="awardedDate">Received On</label>
                                                 </p-floatlabel>
                                                 <div
@@ -331,7 +331,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <p-timeline [value]="awardsList" [style]="{ 'line-height': '1.6'}">
+                                                <p-timeline [value]="awardList" [style]="{ 'line-height': '1.6'}">
                                                     <ng-template #opposite let-award>
                                                         <small class="text-surface-500 dark:text-surface-400">
                                                             {{ award.awardedDate | date:
@@ -354,7 +354,7 @@
                                                 </p-floatlabel>
                                                 <p-floatlabel variant="in">
                                                     <p-datepicker inputId="certificateExpiryDate" #certificateExpiryDate
-                                                        appendTo="body" class="max-w-full" dateFormat="dd.mm.yy"
+                                                        appendTo="body" class="max-w-full" dateFormat="dd/mm/yy"
                                                         [showTime]="false"></p-datepicker>
                                                     <label for="certificateExpiryDate">Expiry Date</label>
                                                 </p-floatlabel>
@@ -367,7 +367,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <p-timeline [value]="certificationsList"
+                                                <p-timeline [value]="certificationList"
                                                     [style]="{ 'line-height': '1.6'}">
                                                     <ng-template #opposite let-certification>
                                                         <small style="word-wrap: break-word;"
@@ -390,7 +390,7 @@
                                         icon="pi pi-arrow-left" iconPos="left" />
                                     <p-button (onClick)="onSubmitProfessionalHistoryForm(activateCallback(4))"
                                         label="Next" icon="pi pi-arrow-right" iconPos="right"
-                                        [disabled]="profileHighlightsForm.invalid" />
+                                        [disabled]="skills.length === 0" />
                                 </div>
                             </form>
                         </div>
@@ -417,7 +417,7 @@
                                                     </p-floatlabel>
                                                     <p-floatlabel variant="in">
                                                         <p-datepicker inputId="yearOfPassing" #yearOfPassing
-                                                            appendTo="body" class="max-w-full" dateFormat="dd.mm.yy"
+                                                            appendTo="body" class="max-w-full" dateFormat="dd/mm/yy"
                                                             [showTime]="false"></p-datepicker>
                                                         <label for="yearOfPassing">Year Of Passing</label>
                                                     </p-floatlabel>
@@ -439,7 +439,8 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <p-timeline [value]="qualifications" [style]="{ 'line-height': '1.6'}">
+                                                <p-timeline [value]="qualificationList"
+                                                    [style]="{ 'line-height': '1.6'}">
                                                     <ng-template #opposite let-qualification>
                                                         <small class="text-surface-500 dark:text-surface-400">
                                                             {{ qualification.grade}}
@@ -468,7 +469,7 @@
                                                 </p-floatlabel>
                                                 <p-floatlabel variant="in">
                                                     <p-datepicker inputId="fromDate" #fromDate appendTo="body"
-                                                        class="max-w-full" dateFormat="dd.mm.yy"
+                                                        class="max-w-full" dateFormat="dd/mm/yy"
                                                         [showTime]="false"></p-datepicker>
                                                     <label for="fromDate">Date Of Joining</label>
                                                 </p-floatlabel>
@@ -481,7 +482,7 @@
                                                 </div>
                                                 <p-floatlabel variant="in">
                                                     <p-datepicker inputId="toDate" #toDate appendTo="body"
-                                                        class="max-w-full" dateFormat="dd.mm.yy" [showTime]="false"
+                                                        class="max-w-full" dateFormat="dd/mm/yy" [showTime]="false"
                                                         [disabled]="isCurrentJob.modelValue"></p-datepicker>
                                                     <label for="toDate">Last Working Day</label>
                                                 </p-floatlabel>
@@ -495,7 +496,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <p-timeline [value]="experiences" [style]="{ 'line-height': '1.6'}">
+                                            <p-timeline [value]="experienceList" [style]="{ 'line-height': '1.6'}">
                                                 <ng-template #opposite let-experience>
                                                     <small class="text-surface-500 dark:text-surface-400">
                                                         {{ experience.fromDate | date: 'dd.MM.yyyy' }} -
@@ -516,7 +517,7 @@
                                         icon="pi pi-arrow-left" iconPos="left" />
                                     <p-button (onClick)="onSubmitProfessionalHistoryForm(activateCallback(5))"
                                         label="Next" icon="pi pi-arrow-right" iconPos="right"
-                                        [disabled]="profileHighlightsForm.invalid" />
+                                        [disabled]="qualificationList.length === 0 || experienceList.length === 0" />
                                 </div>
                             </form>
                         </div>
