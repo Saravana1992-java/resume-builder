@@ -469,8 +469,8 @@
                                                 </p-floatlabel>
                                                 <p-floatlabel variant="in">
                                                     <p-datepicker inputId="fromDate" #fromDate appendTo="body"
-                                                        class="max-w-full" dateFormat="dd/mm/yy"
-                                                        [showTime]="false"></p-datepicker>
+                                                        class="max-w-full" dateFormat="dd/mm/yy" [showTime]="false"
+                                                        [maxDate]="today"></p-datepicker>
                                                     <label for="fromDate">Date Of Joining</label>
                                                 </p-floatlabel>
                                                 <div
@@ -483,7 +483,8 @@
                                                 <p-floatlabel variant="in">
                                                     <p-datepicker inputId="toDate" #toDate appendTo="body"
                                                         class="max-w-full" dateFormat="dd/mm/yy" [showTime]="false"
-                                                        [disabled]="isCurrentJob.modelValue"></p-datepicker>
+                                                        [disabled]="isCurrentJob.modelValue"
+                                                        [minDate]="fromDate.value"></p-datepicker>
                                                     <label for="toDate">Last Working Day</label>
                                                 </p-floatlabel>
                                                 <div
@@ -526,16 +527,43 @@
 
                 <p-step-panel [value]="5">
                     <ng-template #content let-activateCallback="activateCallback">
-                        <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                        <div class="step-panel">
                             <h3>Add project(s)</h3>
                             <form [formGroup]="professionalHistoryForm">
-
-                                <div class="flex pt-6 justify-between">
+                                <div class="form-container">
+                                    <div class="form-field-container">
+                                        <div class="card">
+                                            <p-timeline [value]="experienceList" styleClass="customized-timeline">
+                                                <ng-template #marker let-experience>
+                                                    <span
+                                                        class="flex w-8 h-8 items-center justify-center text-white rounded-full z-10 shadow-sm"
+                                                        [style]="{ 'background-color': '#9C27B0' }">
+                                                        <i class="pi pi-check"></i>
+                                                    </span>
+                                                </ng-template>
+                                                <ng-template #content let-experience>
+                                                    <p-card [header]="experience.company"
+                                                        [subheader]="getJobDuration(experience)">
+                                                        <p>
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                                            Inventore sed consequuntur error repudiandae numquam
+                                                            deserunt quisquam repellat libero asperiores earum nam
+                                                            nobis, culpa ratione quam perferendis esse, cupiditate
+                                                            neque quas!
+                                                        </p>
+                                                    </p-card>
+                                                </ng-template>
+                                            </p-timeline>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    style="margin-top: 40px; display: flex; gap: 20px; align-items: center; justify-content: center;">
                                     <p-button (onClick)="activateCallback(4)" label="Back" severity="secondary"
-                                        icon="pi pi-arrow-left" />
+                                        icon="pi pi-arrow-left" iconPos="left" />
                                     <p-button (onClick)="onSubmitProfessionalHistoryForm(activateCallback(6))"
                                         label="Next" icon="pi pi-arrow-right" iconPos="right"
-                                        [disabled]="educationalQualifications.invalid" />
+                                        [disabled]="experienceList.length === 0" />
                                 </div>
                             </form>
                         </div>

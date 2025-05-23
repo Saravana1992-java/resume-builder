@@ -367,6 +367,18 @@ export class ResumeBuilderComponent {
     this.educationalQualifications.push(this.createQualificationGroup(completeEducationalDetail));
   }
 
+  getJobDuration(experience: Experience): string {
+    const fromDate = experience.fromDate;
+    const toDate = experience.isCurrentJob ? new Date() : experience.toDate;
+    if (!fromDate || !toDate) {
+      return 'N/A';
+    }
+    const duration = Math.abs(toDate.getTime() - fromDate.getTime());
+    const years = Math.floor(duration / (1000 * 3600 * 24 * 365));
+    const months = Math.floor((duration % (1000 * 3600 * 24 * 365)) / (1000 * 3600 * 24 * 30));
+    return `${fromDate} - ${toDate} (${years} years ${months} months)`;
+  }
+
   onSubmitProfileForm(activateCallback: (step: number) => void): void {
     if (this.profileForm.valid) {
       const profileData = this.profileForm.value;
